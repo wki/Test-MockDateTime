@@ -34,6 +34,11 @@ Getting the current time sometimes is not very helpful for testing scenarios.
 Instead, if you could obtain a known value during the runtime of a testcase
 will make your results predictable.
 
+Why another Date Mocker? I wanted something simple with a very concise usage
+pattern and a mocked date should only exist and stay constant inside a scope.
+After leaving the scope the current time should be back. This lead to this
+tiny module.
+
 This simple module allows faking a given date and time for the runtime of
 a subsequent code block. By default the C<on> keyword is exported into the
 namespace of the test file. The date to get mocked must be in a format that
@@ -77,6 +82,37 @@ sub on {
 
     $code->();
 }
+
+=head1 CAVEATS
+
+This module only mocks calls to C<<< DateTime->now >>>. All other ways to
+obtain a current time are not touched.
+
+=head1 SEE ALSO
+
+There are some alternatives. Depending on the environment you might consider
+using one of them instead.
+
+=over
+
+=item L<Test::MockTime|Test::MockTime>
+
+Very universal, overwrites several subs at compile time and allows to set
+a fixed or ticking time at any place in your code.
+
+=item L<Time::Mock|Time::Mock>
+
+Also allows to set a time at various places inside your code.
+
+=item L<Test::MockTime::DateCalc|Test::MockTime::DateCalc>
+
+Mocks serveral L<Date::Calc|Date::Calc> functions.
+
+=item L<Time::Fake|Time::Fake>
+
+Also overwrites several subs at compile time.
+
+=back
 
 =head1 AUTHOR
 
